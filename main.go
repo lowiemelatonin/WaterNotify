@@ -8,7 +8,7 @@ import (
 )
 
 func sendnotification() {
-	iconPath, err := filepath.Abs("icon.ico")
+	iconPath, err := filepath.Abs("knt.ico")
 	if err != nil {
 		panic(err)
 	}
@@ -27,6 +27,8 @@ func sendnotification() {
 
 func main() {
 	notified := map[int]bool{
+		9:  false,
+		12: false,
 		15: false,
 		18: false,
 		21: false,
@@ -36,7 +38,7 @@ func main() {
 		now := time.Now()
 		hour := now.Hour()
 
-		if (hour == 15 || hour == 18 || hour == 21) && !notified[hour] {
+		if (hour == 9 || hour == 12 || hour == 15 || hour == 18 || hour == 21) && !notified[hour] {
 			sendnotification()
 			notified[hour] = true
 		}
