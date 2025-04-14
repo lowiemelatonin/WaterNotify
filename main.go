@@ -2,16 +2,16 @@ package main
 
 import (
 	"path/filepath"
+	"time"
 
 	"github.com/go-toast/toast"
 )
 
-func main() {
+func sendnotification() {
 	iconPath, err := filepath.Abs("icon.ico")
 	if err != nil {
 		panic(err)
 	}
-
 	notification := toast.Notification{
 		AppID:   "waternotify",
 		Title:   "Did you drink some water already?",
@@ -22,5 +22,31 @@ func main() {
 	err = notification.Push()
 	if err != nil {
 		panic(err)
+	}
+}
+
+func main() {
+	notified := map[int]bool{
+		15: false,
+		18: false,
+		21: false,
+	}
+
+	for {
+		now := time.Now()
+		hour := now.Hour()
+
+		if (hour == 15 || hour == 18 || hour == 21) && !notified[hour] {
+			sendnotification()
+			notified[hour] = true
+		}
+
+		if hour == 0 {
+			for k := range notified {
+				notified[k] = false
+			}
+		}
+
+		time.Sleep(time.Minute)
 	}
 }
