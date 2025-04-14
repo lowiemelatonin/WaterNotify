@@ -8,7 +8,7 @@ import (
 )
 
 func sendnotification() {
-	iconPath, err := filepath.Abs("knt.ico")
+	iconPath, err := filepath.Abs("icon.ico")
 	if err != nil {
 		panic(err)
 	}
